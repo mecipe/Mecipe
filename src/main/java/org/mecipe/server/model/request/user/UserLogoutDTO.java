@@ -1,4 +1,4 @@
-package org.mecipe.server.model.request.user.dto;
+package org.mecipe.server.model.request.user;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;

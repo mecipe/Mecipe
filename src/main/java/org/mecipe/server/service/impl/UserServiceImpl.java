@@ -16,12 +16,12 @@ import org.mecipe.server.common.session.LoginUtils;
 import org.mecipe.server.exception.BusinessException;
 import org.mecipe.server.mapper.UserMapper;
 import org.mecipe.server.model.entity.UserEntity;
-import org.mecipe.server.model.request.user.dto.UserDTO;
-import org.mecipe.server.model.request.user.dto.UserLoginDTO;
-import org.mecipe.server.model.request.user.dto.UserLogoutDTO;
-import org.mecipe.server.model.request.user.dto.UserRegisterDTO;
+import org.mecipe.server.model.request.user.UserDTO;
+import org.mecipe.server.model.request.user.UserLoginDTO;
+import org.mecipe.server.model.request.user.UserLogoutDTO;
+import org.mecipe.server.model.request.user.UserRegisterDTO;
 import org.mecipe.server.model.response.LoginToken;
-import org.mecipe.server.model.response.user.vo.UserVO;
+import org.mecipe.server.model.response.user.UserVO;
 import org.mecipe.server.service.IUserService;
 import org.springframework.stereotype.Service;
 
@@ -53,7 +53,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserEntity> impleme
             userMapper.insert(userEntity);
             return true;
         } catch (Exception e) {
-            throw new BusinessException(ErrorCode.USERNAME_EXIST);
+            throw new BusinessException(ErrorCode.PARAMS_ERROR, "用户名已存在");
         } finally {
             lock.unlock();
         }

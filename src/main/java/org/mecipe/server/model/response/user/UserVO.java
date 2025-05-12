@@ -1,14 +1,16 @@
-package org.mecipe.server.model.request.user.dto;
+package org.mecipe.server.model.response.user;
 
 import lombok.*;
+import org.mecipe.server.model.response.LoginToken;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
 
 @Data
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@EqualsAndHashCode(callSuper = false)
-public class UserDTO implements Serializable {
+public class UserVO implements Serializable {
 
     private String username;
 
@@ -21,5 +23,9 @@ public class UserDTO implements Serializable {
     private String email;
 
     private String phoneNumber;
+
+    private LocalDateTime createTime;
+
+    private LoginToken loginToken;
 
 }

@@ -5,7 +5,6 @@ import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
-import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.core.env.Environment;
 
 import java.net.InetAddress;
@@ -19,7 +18,7 @@ import java.util.Enumeration;
 public class MecipeApplication {
 
     public static void main(String[] args) {
-        ConfigurableApplicationContext context = new SpringApplication(MecipeApplication.class).run(args);
+        var context = new SpringApplication(MecipeApplication.class).run(args);
         printServerInfo(context);
     }
 

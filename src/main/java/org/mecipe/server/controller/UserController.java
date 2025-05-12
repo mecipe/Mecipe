@@ -2,12 +2,12 @@ package org.mecipe.server.controller;
 
 import cn.dev33.satoken.annotation.SaCheckLogin;
 import jakarta.annotation.Resource;
-import org.mecipe.server.model.request.user.dto.UserDTO;
-import org.mecipe.server.model.request.user.dto.UserLoginDTO;
-import org.mecipe.server.model.request.user.dto.UserLogoutDTO;
-import org.mecipe.server.model.request.user.dto.UserRegisterDTO;
+import org.mecipe.server.model.request.user.UserDTO;
+import org.mecipe.server.model.request.user.UserLoginDTO;
+import org.mecipe.server.model.request.user.UserLogoutDTO;
+import org.mecipe.server.model.request.user.UserRegisterDTO;
 import org.mecipe.server.model.response.Response;
-import org.mecipe.server.model.response.user.vo.UserVO;
+import org.mecipe.server.model.response.user.UserVO;
 import org.mecipe.server.service.IUserService;
 import org.springframework.web.bind.annotation.*;
 

@@ -1,9 +1,7 @@
 package org.mecipe.server.common.utils;
 
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 
-@Slf4j
 public class BeanConverter {
 
     public static void copyProperties(Object source, Object target) {
@@ -14,10 +12,13 @@ public class BeanConverter {
         }
     }
 
+    /**
+     * Bean转换，目标对象必须有无参构造器
+     */
     public static <T> T toBean(Object source, Class<T> clazz) {
         try {
             T target = clazz.getDeclaredConstructor().newInstance();
-            BeanUtils.copyProperties(source, target);
+            copyProperties(source, target);
             return target;
         } catch (Exception e) {
             throw new RuntimeException("Bean conversion error", e);
