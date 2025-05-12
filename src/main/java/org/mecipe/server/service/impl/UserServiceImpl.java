@@ -22,14 +22,14 @@ import org.mecipe.server.model.request.user.UserLogoutDTO;
 import org.mecipe.server.model.request.user.UserRegisterDTO;
 import org.mecipe.server.model.response.LoginToken;
 import org.mecipe.server.model.response.user.UserVO;
-import org.mecipe.server.service.IUserService;
+import org.mecipe.server.service.UserService;
 import org.springframework.stereotype.Service;
 
 import java.util.concurrent.locks.ReentrantLock;
 
 @Slf4j
 @Service
-public class UserServiceImpl extends ServiceImpl<UserMapper, UserEntity> implements IUserService {
+public class UserServiceImpl extends ServiceImpl<UserMapper, UserEntity> implements UserService {
 
     private final ReentrantLock lock = new ReentrantLock();
 
