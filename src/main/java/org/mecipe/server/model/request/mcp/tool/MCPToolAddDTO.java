@@ -6,7 +6,6 @@ import org.mecipe.server.model.entity.MCPToolParam;
 import java.util.List;
 
 @Data
-@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 public class MCPToolAddDTO {
