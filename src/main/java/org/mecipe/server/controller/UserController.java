@@ -8,7 +8,7 @@ import org.mecipe.server.model.request.user.UserLogoutDTO;
 import org.mecipe.server.model.request.user.UserRegisterDTO;
 import org.mecipe.server.model.response.Response;
 import org.mecipe.server.model.response.user.UserVO;
-import org.mecipe.server.service.IUserService;
+import org.mecipe.server.service.UserService;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -16,28 +16,28 @@ import org.springframework.web.bind.annotation.*;
 public class UserController {
 
     @Resource
-    private IUserService iUserService;
+    private UserService userService;
 
     @PostMapping("/register")
     Response<Boolean> register(@RequestBody UserRegisterDTO registerDTO) {
-        return Response.success(iUserService.register(registerDTO));
+        return Response.success(userService.register(registerDTO));
     }
 
     @PostMapping("/login")
     Response<UserVO> login(@RequestBody UserLoginDTO loginDTO) {
-        return Response.success(iUserService.login(loginDTO));
+        return Response.success(userService.login(loginDTO));
     }
 
     @SaCheckLogin
     @PostMapping("/update")
     Response<UserVO> update(@RequestBody UserDTO userDTO) {
-        return Response.success(iUserService.update(userDTO));
+        return Response.success(userService.update(userDTO));
     }
 
     @SaCheckLogin
     @PostMapping("/logout")
     Response<Boolean> logout(@RequestBody UserLogoutDTO logoutDTO) {
-        return Response.success(iUserService.logout(logoutDTO));
+        return Response.success(userService.logout(logoutDTO));
     }
 
 }
