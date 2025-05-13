@@ -61,6 +61,7 @@ public class MCPToolServiceImpl implements MCPToolService {
                 .map(updateDTO -> BeanConverter.toBean(updateDTO, MCPToolEntity.class))
                 .toList();
         mcpToolMapper.updateById(toolEntities);
+
         return toolEntities.stream()
                 .map(this::mcpToolEntity2VO)
                 .toList();
@@ -69,6 +70,7 @@ public class MCPToolServiceImpl implements MCPToolService {
     @Override
     public List<MCPToolVO> query(MCPToolQueryDTO queryParam) {
         Valider.validateNullParams(queryParam);
+
         return mcpToolMapper.selectList(
                         Wrappers.lambdaQuery(MCPToolEntity.class)
                                 .eq(MCPToolEntity::getMcpId, queryParam.getMcpId())

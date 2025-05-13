@@ -6,7 +6,7 @@ import org.mecipe.server.model.response.LoginToken;
 
 public class LoginUtils {
 
-    public static void login(Long id) {
+    public static void login(Integer id) {
         StpUtil.login(id);
     }
 
@@ -22,13 +22,13 @@ public class LoginUtils {
         StpUtil.checkLogin();
     }
 
-    public static Long getLoginId() {
+    public static Integer getLoginId() {
         if (StpUtil.getLoginIdDefaultNull() == null)
             return null;
-        return StpUtil.getLoginIdAsLong();
+        return StpUtil.getLoginIdAsInt();
     }
 
-    public static Long getUserId() {
+    public static Integer getUserId() {
         return getLoginId();
     }
 

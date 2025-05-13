@@ -15,7 +15,7 @@ import java.time.LocalDateTime;
 public class UserEntity implements Serializable {
 
     @TableId(value = "id", type = IdType.AUTO)
-    private Long id;
+    private Integer id;
 
     @TableField("username")
     private String username;

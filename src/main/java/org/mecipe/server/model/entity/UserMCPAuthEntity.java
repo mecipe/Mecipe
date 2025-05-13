@@ -17,7 +17,7 @@ public class UserMCPAuthEntity {
     private Integer id;
 
     @TableField("user_id")
-    private Long userId;
+    private Integer userId;
 
     @TableField("mcp_id")
     private Integer mcpId;

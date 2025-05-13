@@ -32,7 +32,7 @@ public class MCPEntity {
     private String type;
 
     @TableField("author_id")
-    private String authorId;
+    private Integer authorId;
 
     @TableField("author_name")
     private String authorName;

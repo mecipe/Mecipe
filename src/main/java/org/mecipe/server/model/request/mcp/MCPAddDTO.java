@@ -21,7 +21,7 @@ public class MCPAddDTO {
 
     private String type;
 
-    private Long authorId;
+    private Integer authorId;
 
     private String authorName;
 

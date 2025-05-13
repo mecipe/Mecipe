@@ -140,7 +140,7 @@ public class MCPServiceImpl implements MCPService {
     /**
      * 检查用户是否具有编辑权限
      */
-    private void checkEditAuth(Long userId, Integer mcpId) {
+    private void checkEditAuth(Integer userId, Integer mcpId) {
         LambdaQueryWrapper<UserMCPAuthEntity> queryWrapper = Wrappers.lambdaQuery(UserMCPAuthEntity.class)
                 .eq(UserMCPAuthEntity::getUserId, userId)
                 .eq(UserMCPAuthEntity::getMcpId, mcpId);
