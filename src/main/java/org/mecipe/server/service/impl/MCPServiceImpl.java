@@ -3,6 +3,7 @@ package org.mecipe.server.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import jakarta.annotation.Resource;
+import org.apache.commons.lang3.StringUtils;
 import org.mecipe.server.common.enums.ErrorCode;
 import org.mecipe.server.common.session.LoginUtils;
 import org.mecipe.server.common.utils.BeanConverter;
@@ -25,6 +26,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+
+import static org.apache.commons.lang3.StringUtils.isNotBlank;
 
 @Service
 public class MCPServiceImpl implements MCPService {
@@ -130,10 +133,10 @@ public class MCPServiceImpl implements MCPService {
     public List<MCPEntityVO> query(MCPQueryDTO queryParam) {
         Valider.validateNullParams(queryParam);
         LambdaQueryWrapper<MCPEntity> queryWrapper = Wrappers.lambdaQuery(MCPEntity.class)
-                .eq(MCPEntity::getName, queryParam.getName())
-                .eq(MCPEntity::getType, queryParam.getType())
-                .eq(MCPEntity::getAuthorId, queryParam.getAuthorId())
-                .eq(MCPEntity::getAuthorName, queryParam.getAuthorName())
+                .eq(isNotBlank(queryParam.getName()),MCPEntity::getName, queryParam.getName())
+                .eq(isNotBlank(queryParam.getType()),MCPEntity::getType, queryParam.getType())
+                .eq(isNotBlank(queryParam.getAuthorId()), MCPEntity::getAuthorId, queryParam.getAuthorId())
+                .eq(isNotBlank(queryParam.getAuthorName()),MCPEntity::getAuthorName, queryParam.getAuthorName())
                 .eq(MCPEntity::getStatus, queryParam.getStatus());
 
         return mcpMapper.selectList(queryWrapper)
