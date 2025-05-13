@@ -88,18 +88,21 @@ public class MCPServiceImpl implements MCPService {
             throw new BusinessException(ErrorCode.PARAMS_ERROR, "MCP服务删除失败");
         }
 
-        // 删除MCP服务后，删除对应的权限
+
         UserMCPAuthEntity authEntity = UserMCPAuthEntity.builder()
                 .mcpId(deleteParam.getId())
                 .build();
 
+        // 删除MCP服务后，删除对应的权限
         int deleted1 = userMCPAuthMapper.delete(Wrappers.lambdaQuery(authEntity));
         if (!(deleted1 > 0)) {
             throw new BusinessException(ErrorCode.SYSTEM_ERROR, "MCP服务删除失败");
         }
 
-        // 删除MCP服务后，删除对应的工具
-        return mcpToolService.delete(MCPToolDeleteDTO.builder().mcpId(deleteParam.getId()).build()) > 0;
+        // 删除MCP服务后，删除对应的工具 (有些MCP服务不提供工具)
+        mcpToolService.delete(MCPToolDeleteDTO.builder().mcpId(deleteParam.getId()).build());
+
+        return true;
     }
 
     @Override
