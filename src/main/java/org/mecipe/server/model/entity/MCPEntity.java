@@ -46,7 +46,7 @@ public class MCPEntity {
 
     // 1: 启用, 0: 禁用
     @TableField("status")
-    private Integer status;
+    private Integer status = 1;
 
     @TableField(value = "create_time", fill = FieldFill.INSERT)
     private LocalDateTime createTime;

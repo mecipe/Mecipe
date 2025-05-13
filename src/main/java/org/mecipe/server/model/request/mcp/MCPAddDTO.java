@@ -29,8 +29,6 @@ public class MCPAddDTO {
 
     private int source;
 
-    private Integer status = 1;
-
     private List<MCPToolAddDTO> tools;
 
 }
