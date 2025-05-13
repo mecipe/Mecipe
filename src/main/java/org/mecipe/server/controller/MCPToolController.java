@@ -1,6 +1,7 @@
 package org.mecipe.server.controller;
 
 import cn.dev33.satoken.annotation.SaCheckLogin;
+import cn.dev33.satoken.annotation.SaIgnore;
 import jakarta.annotation.Resource;
 import org.mecipe.server.model.request.mcp.tool.MCPToolAddDTO;
 import org.mecipe.server.model.request.mcp.tool.MCPToolDeleteDTO;
@@ -24,23 +25,24 @@ public class MCPToolController {
     @Resource
     private MCPToolService mcpToolService;
 
+    @SaIgnore
     @PostMapping("/getTool")
     Response<List<MCPToolVO>> getTools(@RequestBody MCPToolQueryDTO toolsDTO) {
         return Response.success(mcpToolService.query(toolsDTO));
     }
 
     @PostMapping("/addTool")
-    Response<Boolean> add(@RequestBody List<MCPToolAddDTO> addDTO) {
+    Response<Boolean> addTool(@RequestBody List<MCPToolAddDTO> addDTO) {
         return Response.success(mcpToolService.add(addDTO));
     }
 
     @PostMapping("/deleteTool")
-    Response<Integer> delete(@RequestBody MCPToolDeleteDTO deleteDTO) {
+    Response<Integer> deleteTool(@RequestBody MCPToolDeleteDTO deleteDTO) {
         return Response.success(mcpToolService.delete(deleteDTO));
     }
 
     @PostMapping("/updateTool")
-    Response<List<MCPToolVO>> update(@RequestBody List<MCPToolUpdateDTO> updateDTOList) {
+    Response<List<MCPToolVO>> updateTool(@RequestBody List<MCPToolUpdateDTO> updateDTOList) {
         return Response.success(mcpToolService.update(updateDTOList));
     }
 
