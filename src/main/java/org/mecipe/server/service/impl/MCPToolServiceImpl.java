@@ -18,6 +18,7 @@ import org.mecipe.server.service.MCPToolService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Objects;
 
 @Service
 public class MCPToolServiceImpl implements MCPToolService {
@@ -43,13 +44,9 @@ public class MCPToolServiceImpl implements MCPToolService {
     @Override
     public int delete(MCPToolDeleteDTO deleteParam) {
         Valider.validateNullParams(deleteParam);
-        var queryWrapper = Wrappers.lambdaQuery(MCPToolEntity.class);
-        if (deleteParam.getId() != null) {
-            queryWrapper.eq(MCPToolEntity::getId, deleteParam.getId());
-        }
-        if (deleteParam.getMcpId() != null) {
-            queryWrapper.eq(MCPToolEntity::getMcpId, deleteParam.getMcpId());
-        }
+        var queryWrapper = Wrappers.lambdaQuery(MCPToolEntity.class)
+                .eq(Objects.nonNull(deleteParam.getId()), MCPToolEntity::getId, deleteParam.getId())
+                .eq(Objects.nonNull(deleteParam.getMcpId()), MCPToolEntity::getMcpId, deleteParam.getMcpId());
 
         return mcpToolMapper.delete(queryWrapper);
     }
