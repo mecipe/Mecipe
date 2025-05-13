@@ -11,8 +11,7 @@ CREATE TABLE IF NOT EXISTS `t_user_mcp_auth`
     is_deleted  TINYINT(1) NOT NULL DEFAULT 0 COMMENT '逻辑删除标识：0-未删除 1-已删除',
     PRIMARY KEY (id),
     KEY `idx_user_id` (`user_id`),
-    KEY `idx_mcp_id` (`mcp_id`),
-    KEY `idx_status` (`status`)
+    KEY `idx_mcp_id` (`mcp_id`)
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8mb4
     COMMENT = 'User-MCP授权关系表，用于控制用户对MCP模块的访问权限';

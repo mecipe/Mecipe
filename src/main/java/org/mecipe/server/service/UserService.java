@@ -9,13 +9,13 @@ import org.mecipe.server.model.response.user.UserVO;
 
 public interface UserService {
 
-    boolean register(UserRegisterDTO registerDTO);
+    boolean register(UserRegisterDTO registerParam);
 
-    UserVO login(UserLoginDTO loginDTO);
+    UserVO login(UserLoginDTO loginParam);
 
-    UserVO update(UserDTO updateDTO);
+    UserVO update(UserDTO updateParam);
 
-    boolean logout(UserLogoutDTO logoutDTO);
+    boolean logout(UserLogoutDTO logoutParam);
 
     void checkUserNotBlocked(UserEntity userEntity);
 

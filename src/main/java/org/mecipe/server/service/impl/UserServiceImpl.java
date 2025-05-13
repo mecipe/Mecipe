@@ -37,17 +37,17 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserEntity> impleme
     private UserMapper userMapper;
 
     @Override
-    public boolean register(UserRegisterDTO registerDTO) {
-        Valider.validateNullParams(registerDTO);
+    public boolean register(UserRegisterDTO registerParam) {
+        Valider.validateNullParams(registerParam);
         // 不允许同时为空
-        if (StringUtils.isAllBlank(registerDTO.getUsername(), registerDTO.getEmail(), registerDTO.getPhoneNumber())) {
+        if (StringUtils.isAllBlank(registerParam.getUsername(), registerParam.getEmail(), registerParam.getPhoneNumber())) {
             throw new BusinessException(ErrorCode.PARAMS_ERROR, "参数不允许为空");
         }
-        UserEntity userEntity = BeanConverter.toBean(registerDTO, UserEntity.class);
+        UserEntity userEntity = BeanConverter.toBean(registerParam, UserEntity.class);
         if (StringUtils.isBlank(userEntity.getNickName())) {
             userEntity.setNickName(RandomGenerator.generateNickName());
         }
-        userEntity.setPassword(Encrypter.encryptPassword(registerDTO.getPassword()));
+        userEntity.setPassword(Encrypter.encryptPassword(registerParam.getPassword()));
         lock.lock();
         try {
             userMapper.insert(userEntity);
@@ -60,17 +60,17 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserEntity> impleme
     }
 
     @Override
-    public UserVO login(UserLoginDTO loginDTO) {
-        Valider.validateNullParams(loginDTO);
+    public UserVO login(UserLoginDTO loginParam) {
+        Valider.validateNullParams(loginParam);
         LambdaQueryWrapper<UserEntity> queryWrapper = Wrappers.lambdaQuery(UserEntity.class);
-        LoginType loginType = LoginType.getLoginType(loginDTO.getLoginTypeCode());
+        LoginType loginType = LoginType.getLoginType(loginParam.getLoginTypeCode());
         switch (loginType) {
-            case USERNAME_PASSWORD -> queryWrapper.eq(UserEntity::getUsername, loginDTO.getUsername());
-            case PHONE -> queryWrapper.eq(UserEntity::getPhoneNumber, loginDTO.getPhoneNumber());
-            case EMAIL -> queryWrapper.eq(UserEntity::getEmail, loginDTO.getEmail());
+            case USERNAME_PASSWORD -> queryWrapper.eq(UserEntity::getUsername, loginParam.getUsername());
+            case PHONE -> queryWrapper.eq(UserEntity::getPhoneNumber, loginParam.getPhoneNumber());
+            case EMAIL -> queryWrapper.eq(UserEntity::getEmail, loginParam.getEmail());
             case null, default -> throw new BusinessException(ErrorCode.PARAMS_ERROR, "不被支持的登录方式");
         }
-        queryWrapper.eq(UserEntity::getPassword, Encrypter.encryptPassword(loginDTO.getPassword()));
+        queryWrapper.eq(UserEntity::getPassword, Encrypter.encryptPassword(loginParam.getPassword()));
         UserEntity userEntity = userMapper.selectOne(queryWrapper);
         if (userEntity == null) {
             throw new BusinessException(ErrorCode.PARAMS_ERROR, "用户名或密码错误");
@@ -86,16 +86,16 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserEntity> impleme
     }
 
     @Override
-    public UserVO update(UserDTO updateDTO) {
-        Valider.validateNullParams(updateDTO);
-        UserEntity userEntity = BeanConverter.toBean(updateDTO, UserEntity.class);
+    public UserVO update(UserDTO updateParam) {
+        Valider.validateNullParams(updateParam);
+        UserEntity userEntity = BeanConverter.toBean(updateParam, UserEntity.class);
         userEntity.setId(LoginUtils.getUserId());
         userMapper.updateById(userEntity);
         return BeanConverter.toBean(userEntity, UserVO.class);
     }
 
     @Override
-    public boolean logout(UserLogoutDTO logoutDTO) {
+    public boolean logout(UserLogoutDTO logoutParam) {
         LoginUtils.logout();
         return true;
     }

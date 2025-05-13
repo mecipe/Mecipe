@@ -28,9 +28,9 @@ public class MCPToolServiceImpl implements MCPToolService {
     private MCPToolMapper mcpToolMapper;
 
     @Override
-    public Boolean add(List<MCPToolAddDTO> addDTOList) {
-        Valider.validateNullParams(addDTOList);
-        List<MCPToolEntity> mcpToolEntities = addDTOList.stream()
+    public Boolean add(List<MCPToolAddDTO> addParams) {
+        Valider.validateNullParams(addParams);
+        List<MCPToolEntity> mcpToolEntities = addParams.stream()
                 .map(mcpTool -> MCPToolEntity.builder()
                         .mcpId(mcpTool.getMcpId())
                         .toolName(mcpTool.getToolName())
@@ -39,27 +39,27 @@ public class MCPToolServiceImpl implements MCPToolService {
                         .build()
                 ).toList();
 
-        return mcpToolMapper.insert(mcpToolEntities).size() == addDTOList.size();
+        return mcpToolMapper.insert(mcpToolEntities).size() == addParams.size();
     }
 
     @Override
-    public int delete(MCPToolDeleteDTO deleteDTO) {
-        Valider.validateNullParams(deleteDTO);
+    public int delete(MCPToolDeleteDTO deleteParam) {
+        Valider.validateNullParams(deleteParam);
         var queryWrapper = Wrappers.lambdaQuery(MCPToolEntity.class);
-        if (deleteDTO.getId() != null) {
-            queryWrapper.eq(MCPToolEntity::getId, deleteDTO.getId());
+        if (deleteParam.getId() != null) {
+            queryWrapper.eq(MCPToolEntity::getId, deleteParam.getId());
         }
-        if (deleteDTO.getMcpId() != null) {
-            queryWrapper.eq(MCPToolEntity::getMcpId, deleteDTO.getMcpId());
+        if (deleteParam.getMcpId() != null) {
+            queryWrapper.eq(MCPToolEntity::getMcpId, deleteParam.getMcpId());
         }
 
         return mcpToolMapper.delete(queryWrapper);
     }
 
     @Override
-    public List<MCPToolVO> update(List<MCPToolUpdateDTO> updateDTOList) {
-        Valider.validateNullParams(updateDTOList);
-        List<MCPToolEntity> toolEntities = updateDTOList.stream()
+    public List<MCPToolVO> update(List<MCPToolUpdateDTO> updateParams) {
+        Valider.validateNullParams(updateParams);
+        List<MCPToolEntity> toolEntities = updateParams.stream()
                 .map(updateDTO -> BeanConverter.toBean(updateDTO, MCPToolEntity.class))
                 .toList();
         mcpToolMapper.updateById(toolEntities);
@@ -69,11 +69,11 @@ public class MCPToolServiceImpl implements MCPToolService {
     }
 
     @Override
-    public List<MCPToolVO> query(MCPToolQueryDTO queryDTO) {
-        Valider.validateNullParams(queryDTO);
+    public List<MCPToolVO> query(MCPToolQueryDTO queryParam) {
+        Valider.validateNullParams(queryParam);
         return mcpToolMapper.selectList(
                         Wrappers.lambdaQuery(MCPToolEntity.class)
-                                .eq(MCPToolEntity::getMcpId, queryDTO.getMcpId())
+                                .eq(MCPToolEntity::getMcpId, queryParam.getMcpId())
                 )
                 .stream()
                 .map(this::mcpToolEntity2VO)

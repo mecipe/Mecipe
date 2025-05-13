@@ -18,8 +18,6 @@ import org.mecipe.server.model.request.mcp.MCPQueryDTO;
 import org.mecipe.server.model.request.mcp.MCPUpdateDTO;
 import org.mecipe.server.model.request.mcp.tool.MCPToolAddDTO;
 import org.mecipe.server.model.request.mcp.tool.MCPToolDeleteDTO;
-import org.mecipe.server.model.request.mcp.tool.MCPToolUpdateDTO;
-import org.mecipe.server.model.response.mcp.MCPToolVO;
 import org.mecipe.server.model.response.mcp.MCPVO;
 import org.mecipe.server.service.MCPService;
 import org.mecipe.server.service.MCPToolService;
@@ -42,9 +40,9 @@ public class MCPServiceImpl implements MCPService {
 
     @Transactional(rollbackFor = Exception.class)
     @Override
-    public boolean add(MCPAddDTO addDTO) {
-        Valider.validateNullParams(addDTO);
-        MCPEntity mcpEntity = BeanConverter.toBean(addDTO, MCPEntity.class);
+    public boolean add(MCPAddDTO addParam) {
+        Valider.validateNullParams(addParam);
+        MCPEntity mcpEntity = BeanConverter.toBean(addParam, MCPEntity.class);
         int inserted = mcpMapper.insert(mcpEntity);
         if (!(inserted > 0)) {
             throw new BusinessException(ErrorCode.SYSTEM_ERROR, "MCP服务添加失败");
@@ -52,7 +50,7 @@ public class MCPServiceImpl implements MCPService {
 
         // 添加MCP服务后，为用户添加'编辑'权限
         UserMCPAuthEntity authEntity = UserMCPAuthEntity.builder()
-                .userId(addDTO.getAuthorId())
+                .userId(addParam.getAuthorId())
                 .mcpId(mcpEntity.getId())
                 .authType(2)
                 .expiredAt(null)
@@ -64,7 +62,7 @@ public class MCPServiceImpl implements MCPService {
         }
 
         // 添加MCP服务后，为MCP服务添加工具
-        List<MCPToolAddDTO> mcpTools = addDTO.getTools();
+        List<MCPToolAddDTO> mcpTools = addParam.getTools();
         if (mcpTools != null && !mcpTools.isEmpty()) {
             return mcpToolService.add(mcpTools);
         }
@@ -72,15 +70,15 @@ public class MCPServiceImpl implements MCPService {
     }
 
     @Override
-    public boolean delete(MCPDeleteDTO deleteDTO) {
-        Valider.validateNullParams(deleteDTO);
+    public boolean delete(MCPDeleteDTO deleteParam) {
+        Valider.validateNullParams(deleteParam);
 
         // 查询用户是否具有编辑权限
-        checkEditAuth(LoginUtils.getUserId(), deleteDTO.getId());
+        checkEditAuth(LoginUtils.getUserId(), deleteParam.getId());
 
         LambdaQueryWrapper<MCPEntity> queryWrapper = Wrappers.lambdaQuery(MCPEntity.class);
-        if (deleteDTO.getId() != null) {
-            queryWrapper.eq(MCPEntity::getId, deleteDTO.getId());
+        if (deleteParam.getId() != null) {
+            queryWrapper.eq(MCPEntity::getId, deleteParam.getId());
         }
 
         int deleted = mcpMapper.delete(queryWrapper);
@@ -90,7 +88,7 @@ public class MCPServiceImpl implements MCPService {
 
         // 删除MCP服务后，删除对应的权限
         UserMCPAuthEntity authEntity = UserMCPAuthEntity.builder()
-                .mcpId(deleteDTO.getId())
+                .mcpId(deleteParam.getId())
                 .build();
 
         int deleted1 = userMCPAuthMapper.delete(Wrappers.lambdaQuery(authEntity));
@@ -99,14 +97,14 @@ public class MCPServiceImpl implements MCPService {
         }
 
         // 删除MCP服务后，删除对应的工具
-        return mcpToolService.delete(MCPToolDeleteDTO.builder().mcpId(deleteDTO.getId()).build()) > 0;
+        return mcpToolService.delete(MCPToolDeleteDTO.builder().mcpId(deleteParam.getId()).build()) > 0;
     }
 
     @Override
-    public MCPVO update(MCPUpdateDTO updateDTO) {
-        Valider.validateNullParams(updateDTO);
-        checkEditAuth(LoginUtils.getUserId(), updateDTO.getId());
-        MCPEntity mcpEntity = BeanConverter.toBean(updateDTO, MCPEntity.class);
+    public MCPVO update(MCPUpdateDTO updateParam) {
+        Valider.validateNullParams(updateParam);
+        checkEditAuth(LoginUtils.getUserId(), updateParam.getId());
+        MCPEntity mcpEntity = BeanConverter.toBean(updateParam, MCPEntity.class);
         // 更新 MCP 信息
         mcpMapper.updateById(mcpEntity);
 
@@ -124,14 +122,14 @@ public class MCPServiceImpl implements MCPService {
     }
 
     @Override
-    public List<MCPVO> query(MCPQueryDTO queryDTO) {
-        Valider.validateNullParams(queryDTO);
+    public List<MCPVO> query(MCPQueryDTO queryParam) {
+        Valider.validateNullParams(queryParam);
         LambdaQueryWrapper<MCPEntity> queryWrapper = Wrappers.lambdaQuery(MCPEntity.class)
-                .eq(MCPEntity::getName, queryDTO.getName())
-                .eq(MCPEntity::getType, queryDTO.getType())
-                .eq(MCPEntity::getAuthorId, queryDTO.getAuthorId())
-                .eq(MCPEntity::getAuthorName, queryDTO.getAuthorName())
-                .eq(MCPEntity::getStatus, queryDTO.getStatus());
+                .eq(MCPEntity::getName, queryParam.getName())
+                .eq(MCPEntity::getType, queryParam.getType())
+                .eq(MCPEntity::getAuthorId, queryParam.getAuthorId())
+                .eq(MCPEntity::getAuthorName, queryParam.getAuthorName())
+                .eq(MCPEntity::getStatus, queryParam.getStatus());
 
         return mcpMapper.selectList(queryWrapper)
                 .stream()

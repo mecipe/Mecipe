@@ -26,24 +26,24 @@ public class MCPToolController {
     private MCPToolService mcpToolService;
 
     @SaIgnore
-    @PostMapping("/getTool")
-    Response<List<MCPToolVO>> getTools(@RequestBody MCPToolQueryDTO toolsDTO) {
-        return Response.success(mcpToolService.query(toolsDTO));
+    @PostMapping("/get")
+    Response<List<MCPToolVO>> get(@RequestBody MCPToolQueryDTO queryParam) {
+        return Response.success(mcpToolService.query(queryParam));
     }
 
-    @PostMapping("/addTool")
-    Response<Boolean> addTool(@RequestBody List<MCPToolAddDTO> addDTO) {
-        return Response.success(mcpToolService.add(addDTO));
+    @PostMapping("/add")
+    Response<Boolean> add(@RequestBody List<MCPToolAddDTO> addParams) {
+        return Response.success(mcpToolService.add(addParams));
     }
 
-    @PostMapping("/deleteTool")
-    Response<Integer> deleteTool(@RequestBody MCPToolDeleteDTO deleteDTO) {
-        return Response.success(mcpToolService.delete(deleteDTO));
+    @PostMapping("/delete")
+    Response<Integer> delete(@RequestBody MCPToolDeleteDTO deleteParam) {
+        return Response.success(mcpToolService.delete(deleteParam));
     }
 
-    @PostMapping("/updateTool")
-    Response<List<MCPToolVO>> updateTool(@RequestBody List<MCPToolUpdateDTO> updateDTOList) {
-        return Response.success(mcpToolService.update(updateDTOList));
+    @PostMapping("/update")
+    Response<List<MCPToolVO>> update(@RequestBody List<MCPToolUpdateDTO> updateParams) {
+        return Response.success(mcpToolService.update(updateParams));
     }
 
 }

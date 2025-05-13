@@ -1,6 +1,5 @@
 package org.mecipe.server.service;
 
-import org.mecipe.server.model.request.mcp.MCPDeleteDTO;
 import org.mecipe.server.model.request.mcp.tool.MCPToolAddDTO;
 import org.mecipe.server.model.request.mcp.tool.MCPToolDeleteDTO;
 import org.mecipe.server.model.request.mcp.tool.MCPToolQueryDTO;
@@ -11,12 +10,12 @@ import java.util.List;
 
 public interface MCPToolService {
 
-    Boolean add(List<MCPToolAddDTO> addDTOList);
+    Boolean add(List<MCPToolAddDTO> addParams);
 
-    int delete(MCPToolDeleteDTO deleteDTO);
+    int delete(MCPToolDeleteDTO deleteParam);
 
-    List<MCPToolVO> update(List<MCPToolUpdateDTO> updateDTOList);
+    List<MCPToolVO> update(List<MCPToolUpdateDTO> updateParams);
 
-    List<MCPToolVO> query(MCPToolQueryDTO queryDTO);
+    List<MCPToolVO> query(MCPToolQueryDTO queryParams);
 
 }

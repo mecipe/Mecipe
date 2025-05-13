@@ -19,25 +19,25 @@ public class UserController {
     private UserService userService;
 
     @PostMapping("/register")
-    Response<Boolean> register(@RequestBody UserRegisterDTO registerDTO) {
-        return Response.success(userService.register(registerDTO));
+    Response<Boolean> register(@RequestBody UserRegisterDTO registerParam) {
+        return Response.success(userService.register(registerParam));
     }
 
     @PostMapping("/login")
-    Response<UserVO> login(@RequestBody UserLoginDTO loginDTO) {
-        return Response.success(userService.login(loginDTO));
+    Response<UserVO> login(@RequestBody UserLoginDTO loginParam) {
+        return Response.success(userService.login(loginParam));
     }
 
     @SaCheckLogin
     @PostMapping("/update")
-    Response<UserVO> update(@RequestBody UserDTO userDTO) {
-        return Response.success(userService.update(userDTO));
+    Response<UserVO> update(@RequestBody UserDTO userParam) {
+        return Response.success(userService.update(userParam));
     }
 
     @SaCheckLogin
     @PostMapping("/logout")
-    Response<Boolean> logout(@RequestBody UserLogoutDTO logoutDTO) {
-        return Response.success(userService.logout(logoutDTO));
+    Response<Boolean> logout(@RequestBody UserLogoutDTO logoutParam) {
+        return Response.success(userService.logout(logoutParam));
     }
 
 }

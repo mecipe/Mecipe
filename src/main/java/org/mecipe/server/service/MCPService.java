@@ -11,14 +11,14 @@ import java.util.List;
 
 public interface MCPService {
 
-    boolean add(MCPAddDTO addDTO);
+    boolean add(MCPAddDTO addParam);
 
-    boolean delete(MCPDeleteDTO deleteDTO);
+    boolean delete(MCPDeleteDTO deleteParam);
 
-    MCPVO update(MCPUpdateDTO updateDTO);
+    MCPVO update(MCPUpdateDTO updateParam);
 
-    boolean disable(MCPDeleteDTO disableDTO);
+    boolean disable(MCPDeleteDTO disableParam);
 
-    List<MCPVO> query(MCPQueryDTO queryDTO);
+    List<MCPVO> query(MCPQueryDTO queryParam);
 
 }

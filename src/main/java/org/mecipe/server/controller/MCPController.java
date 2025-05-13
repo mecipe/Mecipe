@@ -1,6 +1,7 @@
 package org.mecipe.server.controller;
 
 import cn.dev33.satoken.annotation.SaCheckLogin;
+import cn.dev33.satoken.annotation.SaIgnore;
 import jakarta.annotation.Resource;
 import org.mecipe.server.model.request.mcp.MCPAddDTO;
 import org.mecipe.server.model.request.mcp.MCPDeleteDTO;
@@ -25,29 +26,30 @@ public class MCPController {
     private MCPService mcpService;
 
     @PostMapping("/add")
-    Response<Boolean> add(@RequestBody MCPAddDTO addDTO) {
-        return Response.success(mcpService.add(addDTO));
+    Response<Boolean> add(@RequestBody MCPAddDTO addParam) {
+        return Response.success(mcpService.add(addParam));
     }
 
     @PostMapping("/delete")
-    Response<Boolean> delete(@RequestBody MCPDeleteDTO deleteDTO) {
-        return Response.success(mcpService.delete(deleteDTO));
+    Response<Boolean> delete(@RequestBody MCPDeleteDTO deleteParam) {
+        return Response.success(mcpService.delete(deleteParam));
     }
 
     @PostMapping("/update")
-    Response<MCPVO> update(@RequestBody MCPUpdateDTO updateDTO) {
-        return Response.success(mcpService.update(updateDTO));
+    Response<MCPVO> updateMCPInfo(@RequestBody MCPUpdateDTO updateParam) {
+        return Response.success(mcpService.update(updateParam));
     }
 
 
     @PostMapping("/disable")
-    Response<Boolean> disable(@RequestBody MCPDeleteDTO disableDTO) {
-        return Response.success(mcpService.disable(disableDTO));
+    Response<Boolean> disableMCP(@RequestBody MCPDeleteDTO disableParam) {
+        return Response.success(mcpService.disable(disableParam));
     }
 
+    @SaIgnore
     @PostMapping("/query")
-    Response<List<MCPVO>> query(@RequestBody MCPQueryDTO queryDTO) {
-        return Response.success(mcpService.query(queryDTO));
+    Response<List<MCPVO>> query(@RequestBody MCPQueryDTO queryParam) {
+        return Response.success(mcpService.query(queryParam));
     }
 
 }
