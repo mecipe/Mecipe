@@ -7,10 +7,8 @@ import org.mecipe.server.model.request.mcp.MCPDeleteDTO;
 import org.mecipe.server.model.request.mcp.MCPQueryDTO;
 import org.mecipe.server.model.request.mcp.MCPUpdateDTO;
 import org.mecipe.server.model.response.Response;
-import org.mecipe.server.model.response.mcp.MCPToolVO;
 import org.mecipe.server.model.response.mcp.MCPVO;
 import org.mecipe.server.service.MCPService;
-import org.mecipe.server.service.MCPToolService;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,9 +23,6 @@ public class MCPController {
 
     @Resource
     private MCPService mcpService;
-
-    @Resource
-    private MCPToolService mcpToolService;
 
     @PostMapping("/add")
     Response<Boolean> add(@RequestBody MCPAddDTO addDTO) {
@@ -53,11 +48,6 @@ public class MCPController {
     @PostMapping("/query")
     Response<List<MCPVO>> query(@RequestBody MCPQueryDTO queryDTO) {
         return Response.success(mcpService.query(queryDTO));
-    }
-
-    @PostMapping("/getTools")
-    Response<List<MCPToolVO>> getTools(@RequestBody MCPDeleteDTO toolsDTO) {
-        return Response.success(mcpToolService.query(toolsDTO));
     }
 
 }

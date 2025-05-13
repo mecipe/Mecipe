@@ -1,16 +1,18 @@
 package org.mecipe.server.model.request.mcp.tool;
 
 import lombok.*;
-import lombok.experimental.SuperBuilder;
 import org.mecipe.server.model.entity.MCPToolParam;
 
 import java.util.List;
 
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@SuperBuilder
-public class MCPToolAddDTO {
+@Builder
+public class MCPToolUpdateDTO {
+
+    private Integer id;
 
     private Integer mcpId;
 

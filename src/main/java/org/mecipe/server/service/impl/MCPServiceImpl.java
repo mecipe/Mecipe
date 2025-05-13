@@ -6,22 +6,23 @@ import jakarta.annotation.Resource;
 import org.mecipe.server.common.enums.ErrorCode;
 import org.mecipe.server.common.session.LoginUtils;
 import org.mecipe.server.common.utils.BeanConverter;
-import org.mecipe.server.common.utils.JSON;
 import org.mecipe.server.common.utils.Valider;
 import org.mecipe.server.exception.BusinessException;
 import org.mecipe.server.mapper.MCPMapper;
-import org.mecipe.server.mapper.MCPToolMapper;
 import org.mecipe.server.mapper.UserMCPAuthMapper;
 import org.mecipe.server.model.entity.MCPEntity;
-import org.mecipe.server.model.entity.MCPToolEntity;
 import org.mecipe.server.model.entity.UserMCPAuthEntity;
 import org.mecipe.server.model.request.mcp.MCPAddDTO;
 import org.mecipe.server.model.request.mcp.MCPDeleteDTO;
 import org.mecipe.server.model.request.mcp.MCPQueryDTO;
 import org.mecipe.server.model.request.mcp.MCPUpdateDTO;
 import org.mecipe.server.model.request.mcp.tool.MCPToolAddDTO;
+import org.mecipe.server.model.request.mcp.tool.MCPToolDeleteDTO;
+import org.mecipe.server.model.request.mcp.tool.MCPToolUpdateDTO;
+import org.mecipe.server.model.response.mcp.MCPToolVO;
 import org.mecipe.server.model.response.mcp.MCPVO;
 import org.mecipe.server.service.MCPService;
+import org.mecipe.server.service.MCPToolService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -37,7 +38,7 @@ public class MCPServiceImpl implements MCPService {
     private UserMCPAuthMapper userMCPAuthMapper;
 
     @Resource
-    private MCPToolMapper mcpToolMapper;
+    private MCPToolService mcpToolService;
 
     @Transactional(rollbackFor = Exception.class)
     @Override
@@ -64,17 +65,10 @@ public class MCPServiceImpl implements MCPService {
 
         // 添加MCP服务后，为MCP服务添加工具
         List<MCPToolAddDTO> mcpTools = addDTO.getTools();
-        Valider.validateNullParams(mcpTools);
-        List<MCPToolEntity> mcpToolEntities = mcpTools.stream()
-                .map(mcpTool -> MCPToolEntity.builder()
-                        .mcpId(mcpEntity.getId())
-                        .toolName(mcpTool.getToolName())
-                        .description(mcpTool.getDescription())
-                        .params(JSON.toJson(mcpTool.getParams()))
-                        .build()
-                ).toList();
-
-        return mcpToolMapper.insert(mcpToolEntities).size() == mcpTools.size();
+        if (mcpTools != null && !mcpTools.isEmpty()) {
+            return mcpToolService.add(mcpTools);
+        }
+        return true;
     }
 
     @Override
@@ -99,7 +93,13 @@ public class MCPServiceImpl implements MCPService {
                 .mcpId(deleteDTO.getId())
                 .build();
 
-        return userMCPAuthMapper.delete(Wrappers.lambdaQuery(authEntity)) > 0;
+        int deleted1 = userMCPAuthMapper.delete(Wrappers.lambdaQuery(authEntity));
+        if (!(deleted1 > 0)) {
+            throw new BusinessException(ErrorCode.SYSTEM_ERROR, "MCP服务删除失败");
+        }
+
+        // 删除MCP服务后，删除对应的工具
+        return mcpToolService.delete(MCPToolDeleteDTO.builder().mcpId(deleteDTO.getId()).build()) > 0;
     }
 
     @Override
@@ -107,7 +107,9 @@ public class MCPServiceImpl implements MCPService {
         Valider.validateNullParams(updateDTO);
         checkEditAuth(LoginUtils.getUserId(), updateDTO.getId());
         MCPEntity mcpEntity = BeanConverter.toBean(updateDTO, MCPEntity.class);
+        // 更新 MCP 信息
         mcpMapper.updateById(mcpEntity);
+
         return BeanConverter.toBean(mcpEntity, MCPVO.class);
     }
 
