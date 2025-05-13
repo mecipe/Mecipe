@@ -18,7 +18,7 @@ import org.mecipe.server.model.request.mcp.MCPQueryDTO;
 import org.mecipe.server.model.request.mcp.MCPUpdateDTO;
 import org.mecipe.server.model.request.mcp.tool.MCPToolAddDTO;
 import org.mecipe.server.model.request.mcp.tool.MCPToolDeleteDTO;
-import org.mecipe.server.model.response.mcp.MCPVO;
+import org.mecipe.server.model.response.mcp.MCPEntityVO;
 import org.mecipe.server.service.MCPService;
 import org.mecipe.server.service.MCPToolService;
 import org.springframework.stereotype.Service;
@@ -101,14 +101,14 @@ public class MCPServiceImpl implements MCPService {
     }
 
     @Override
-    public MCPVO update(MCPUpdateDTO updateParam) {
+    public MCPEntityVO update(MCPUpdateDTO updateParam) {
         Valider.validateNullParams(updateParam);
         checkEditAuth(LoginUtils.getUserId(), updateParam.getId());
         MCPEntity mcpEntity = BeanConverter.toBean(updateParam, MCPEntity.class);
         // 更新 MCP 信息
         mcpMapper.updateById(mcpEntity);
 
-        return BeanConverter.toBean(mcpEntity, MCPVO.class);
+        return BeanConverter.toBean(mcpEntity, MCPEntityVO.class);
     }
 
     @Override
@@ -122,7 +122,7 @@ public class MCPServiceImpl implements MCPService {
     }
 
     @Override
-    public List<MCPVO> query(MCPQueryDTO queryParam) {
+    public List<MCPEntityVO> query(MCPQueryDTO queryParam) {
         Valider.validateNullParams(queryParam);
         LambdaQueryWrapper<MCPEntity> queryWrapper = Wrappers.lambdaQuery(MCPEntity.class)
                 .eq(MCPEntity::getName, queryParam.getName())
@@ -133,7 +133,7 @@ public class MCPServiceImpl implements MCPService {
 
         return mcpMapper.selectList(queryWrapper)
                 .stream()
-                .map(mcpEntity -> BeanConverter.toBean(mcpEntity, MCPVO.class))
+                .map(mcpEntity -> BeanConverter.toBean(mcpEntity, MCPEntityVO.class))
                 .toList();
     }
 

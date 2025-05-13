@@ -1,6 +1,5 @@
 package org.mecipe.server.service.impl;
 
-import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.google.gson.reflect.TypeToken;
 import jakarta.annotation.Resource;
@@ -10,7 +9,6 @@ import org.mecipe.server.common.utils.Valider;
 import org.mecipe.server.mapper.MCPToolMapper;
 import org.mecipe.server.model.entity.MCPToolEntity;
 import org.mecipe.server.model.entity.MCPToolParam;
-import org.mecipe.server.model.request.mcp.MCPDeleteDTO;
 import org.mecipe.server.model.request.mcp.tool.MCPToolAddDTO;
 import org.mecipe.server.model.request.mcp.tool.MCPToolDeleteDTO;
 import org.mecipe.server.model.request.mcp.tool.MCPToolQueryDTO;

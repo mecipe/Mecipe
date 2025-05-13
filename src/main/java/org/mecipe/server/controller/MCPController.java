@@ -8,7 +8,7 @@ import org.mecipe.server.model.request.mcp.MCPDeleteDTO;
 import org.mecipe.server.model.request.mcp.MCPQueryDTO;
 import org.mecipe.server.model.request.mcp.MCPUpdateDTO;
 import org.mecipe.server.model.response.Response;
-import org.mecipe.server.model.response.mcp.MCPVO;
+import org.mecipe.server.model.response.mcp.MCPEntityVO;
 import org.mecipe.server.service.MCPService;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -36,19 +36,18 @@ public class MCPController {
     }
 
     @PostMapping("/update")
-    Response<MCPVO> updateMCPInfo(@RequestBody MCPUpdateDTO updateParam) {
+    Response<MCPEntityVO> update(@RequestBody MCPUpdateDTO updateParam) {
         return Response.success(mcpService.update(updateParam));
     }
 
-
     @PostMapping("/disable")
-    Response<Boolean> disableMCP(@RequestBody MCPDeleteDTO disableParam) {
+    Response<Boolean> disable(@RequestBody MCPDeleteDTO disableParam) {
         return Response.success(mcpService.disable(disableParam));
     }
 
     @SaIgnore
     @PostMapping("/query")
-    Response<List<MCPVO>> query(@RequestBody MCPQueryDTO queryParam) {
+    Response<List<MCPEntityVO>> query(@RequestBody MCPQueryDTO queryParam) {
         return Response.success(mcpService.query(queryParam));
     }
 

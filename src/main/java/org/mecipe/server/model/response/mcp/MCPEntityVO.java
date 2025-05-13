@@ -8,7 +8,7 @@ import java.time.LocalDateTime;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class MCPVO {
+public class MCPEntityVO {
 
     private Integer id;
 

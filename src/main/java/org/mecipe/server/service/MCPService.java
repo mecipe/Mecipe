@@ -5,7 +5,7 @@ import org.mecipe.server.model.request.mcp.MCPDeleteDTO;
 import org.mecipe.server.model.request.mcp.MCPQueryDTO;
 
 import org.mecipe.server.model.request.mcp.MCPUpdateDTO;
-import org.mecipe.server.model.response.mcp.MCPVO;
+import org.mecipe.server.model.response.mcp.MCPEntityVO;
 
 import java.util.List;
 
@@ -15,10 +15,10 @@ public interface MCPService {
 
     boolean delete(MCPDeleteDTO deleteParam);
 
-    MCPVO update(MCPUpdateDTO updateParam);
+    MCPEntityVO update(MCPUpdateDTO updateParam);
 
     boolean disable(MCPDeleteDTO disableParam);
 
-    List<MCPVO> query(MCPQueryDTO queryParam);
+    List<MCPEntityVO> query(MCPQueryDTO queryParam);
 
 }
