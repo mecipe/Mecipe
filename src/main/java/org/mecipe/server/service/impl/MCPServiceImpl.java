@@ -64,11 +64,13 @@ public class MCPServiceImpl implements MCPService {
         // 添加MCP服务后，为MCP服务添加工具
         List<MCPToolAddDTO> mcpTools = addParam.getTools();
         if (mcpTools != null && !mcpTools.isEmpty()) {
+            mcpTools.forEach(tool -> tool.setMcpId(mcpEntity.getId()));
             return mcpToolService.add(mcpTools);
         }
         return true;
     }
 
+    @Transactional(rollbackFor = Exception.class)
     @Override
     public boolean delete(MCPDeleteDTO deleteParam) {
         Valider.validateNullParams(deleteParam);
