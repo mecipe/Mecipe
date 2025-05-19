@@ -28,13 +28,12 @@ public class MecipeApplication {
         String port = env.getProperty("server.port", "8080");
         log.info(
                  """
-                 MecipeApplication is running!
-                 -----------------------------------------------------------------
+                 \n-----------------------------------------------------------------
+                                MecipeApplication is running!
                  Application API    : http://localhost:{}/api
                  Swagger 本机地址     : http://localhost:{}/api/doc.html#/home
                  Swagger 内网地址     : http://{}:{}/api/doc.html#/home
-                 -----------------------------------------------------------------
-                 """, port, port, ip, port);
+                 -----------------------------------------------------------------""", port, port, ip, port);
 
     }
 

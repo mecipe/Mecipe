@@ -3,7 +3,6 @@ package org.mecipe.server.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import jakarta.annotation.Resource;
-import org.apache.commons.lang3.StringUtils;
 import org.mecipe.server.common.enums.ErrorCode;
 import org.mecipe.server.common.session.LoginUtils;
 import org.mecipe.server.common.utils.BeanConverter;
@@ -90,7 +89,6 @@ public class MCPServiceImpl implements MCPService {
         if (!(deleted > 0)) {
             throw new BusinessException(ErrorCode.PARAMS_ERROR, "MCP服务删除失败");
         }
-
 
         UserMCPAuthEntity authEntity = UserMCPAuthEntity.builder()
                 .mcpId(deleteParam.getId())

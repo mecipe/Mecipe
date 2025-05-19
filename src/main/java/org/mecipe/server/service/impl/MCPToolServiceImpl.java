@@ -4,7 +4,7 @@ import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.google.gson.reflect.TypeToken;
 import jakarta.annotation.Resource;
 import org.mecipe.server.common.utils.BeanConverter;
-import org.mecipe.server.common.utils.JSON;
+import org.mecipe.server.common.utils.Json;
 import org.mecipe.server.common.utils.Valider;
 import org.mecipe.server.mapper.MCPToolMapper;
 import org.mecipe.server.model.entity.MCPToolEntity;
@@ -34,7 +34,7 @@ public class MCPToolServiceImpl implements MCPToolService {
                         .mcpId(mcpTool.getMcpId())
                         .toolName(mcpTool.getToolName())
                         .description(mcpTool.getDescription())
-                        .params(JSON.toJson(mcpTool.getParams()))
+                        .params(Json.toJson(mcpTool.getParams()))
                         .build()
                 ).toList();
 
@@ -84,7 +84,7 @@ public class MCPToolServiceImpl implements MCPToolService {
                 .mcpId(mcpToolEntity.getMcpId())
                 .toolName(mcpToolEntity.getToolName())
                 .description(mcpToolEntity.getDescription())
-                .params(JSON.fromJson(mcpToolEntity.getParams(), new TypeToken<List<MCPToolParam>>() {
+                .params(Json.fromJson(mcpToolEntity.getParams(), new TypeToken<List<MCPToolParam>>() {
                 }.getType()))
                 .build();
     }
